@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Elements - Hyperspace by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Home</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="Research.html" >Research</a></li>
+						<li><a href="Teaching.html" >Teaching</a></li>
+						<li><a href="Workshop.html" class="active">Workshop</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Informs Knowledge Cafe' (Spring 2021)</h1>
+
+							<!-- Text -->
+								<section>
+									<h2>Tutorial-Data Collection</h2>
+									
+									<p>
+									The <a href="https://www.biz.uiowa.edu/informs/" style="color: red"><u>University of Iowa Student INFORMS</u></a> holds an informal gathering known as Knowledge Café in which people share their knowledge and expertise. 
+									Anyone interested in learning from other researchers is welcomed. More about the University of Iowa Student INFORMS can be found <a href="https://www.biz.uiowa.edu/informs/" style="color: red"><u>here</u></a>!<br>
+
+
+									In this Knowledge Café, we are going to learn how to collect data from databases by using Application Programming Interface (API) 
+									provided by databases. We mainly focus on Wharton Research Data Services (<a href="https://wrds-www.wharton.upenn.edu/" style="color: red"><u>WRDS</u></a>) and <a href="https://www.bloomberg.com/" style="color: red"><u>Bloomberg</u></a> terminal using Python API.</p>
+									<hr />
+									<h2>1. WRDS</h2>
+									<h3>Setup</h3>
+									<li><b>Step 1</b></li>
+										<p>The installation is fairly easy. You need to create account or register <a href="https://wrds-web.wharton.upenn.edu/wrds/?register=1" style="color: red"><u>here</u></a>. For more information, 
+										you may ask <a href="https://tippie.uiowa.edu/people/kimberly-bloedel" style="color: red"><u>Kim Bloedel</u></a>, the head of <a href="https://www.lib.uiowa.edu/biz/" style="color: red"><u>Pomerantz Business Library</u></a>.
+									</p>
+									<li><b>Step 2</b></li>
+									<p>
+									Install the WRDS Python Module by running the following command in your Anaconda Terminal.<br>
+									<pre><code> pip install wrds</code></pre>
+									</p>
+									
+									<h3>Data Collection from WRDS</h3>
+									<p>
+									import the WRDS Python Module<br>
+										<pre><code>import wrds</code></pre>
+									Connect to WRDS<br>
+										<pre><code>db = wrds.Connection(wrds_username='your-username')</code></pre>
+									</p>
+									
+									<span class="image fit"><img src="images/WRDS1.png" alt="" /></span>
+									
+									<p>Find your library and tables. They can be found in the "Variable Description" of interested libraries, see the following picture:</p>
+									<span class="image fit"><img src="images/WRDS0.png" alt="" /></span>
+									
+									Or, another method for discovering what tables are included inside a libraries, you can run the <code>db.list_tables(library="intersted library")</code>.<br>
+									For example, in the follwing picture, I am going to find out what tables are included in the library of <code>'comp'</code>:
+									<span class="image fit"><img src="images/WRDS2.png" alt="" /></span>
+									
+									The following command describes the variables of table <code>'wrds_seg_customer'</code> 
+									<span class="image fit"><img src="images/WRDS3.png" alt="" /></span>
+									
+									Now, let's say we are going to collect 'company name', 'gvkey' and 'sales to cutomers' from the table <code>'wrds_seg_customer'</code> and the library <code>'comp'</code>
+									<span class="image fit"><img src="images/WRDS4.png" alt="" /></span>
+									
+									Sometimes, it is just helpful to collect the required data. Let's say, we have a database taht shows companies and whether thay have twitter account or not.<br>
+									<span class="image fit"><img src="images/WRDS5.png" alt="" /></span>
+									Now, we are going to collect their 'sales', 'company name', and 'cusip' of these companies. <br><br><br>
+									
+									
+									First, we need to create a dictionary of tickers with the following format:
+									<span class="image fit"><img src="images/WRDS6.png" alt="" /></span>
+						
+									Once, we create that dictionary, we submit the job to wrds for colleccting those variables only for these companies and only
+									from January of 2010 till January of 2020. See the following picture:
+									<span class="image fit"><img src="images/WRDS7.png" alt="" /></span>
+				
+									Once the data is collected, we may again merge two dataframes:
+									<span class="image fit"><img src="images/WRDS8.png" alt="" /></span>
+									
+									So, this process can be applied to any other databases, the only thing you need to change is your wrds library and table.
+									<hr />
+									
+							
+						
+									<h2>2. Bloobmerg</h2>
+									Two python APIs are available:<br>
+									<h3>2.1. Installation</h3>
+										<p>
+											
+											<h4>2.1.1. pdblp</h4>
+											I personally do not recommend this API since I did not find it very user-friendly compared to the Xbbg (next one that I am using). But you can find installation and documentation in the following links: <br>
+											<li> <a href="https://pypi.org/project/pdblp/" style="color: red"><u>Installation</u></a></li>
+											<li> <a href="https://matthewgilbert.github.io/pdblp/tutorial.html" style="color: red"><u>Documentation</u></a></li>
+											
+										</p>
+										
+										<p>
+										<h4>2.1.2. xbbg</h4>	
+										You can find the installation and documetation <li> <a href="https://pypi.org/project/xbbg/" style="color: red"><u>here</u></a></li>. Since the installation is not very straightforward compared to wrds, we will do it here again. 
+										<li><b>Step 1</b>: Install xbbg</li> 
+										Run this code in your Anaconda terminal<code>pip install xbbg</code>
+										
+										<li><b>Step 2</b>: Install blpapi</li> 
+										Run this code in your Anaconda terminal<code>pconda install -c conda-forge blpapi</code>
+										
+										<li><b>Step 3</b>: Replace <code>blpapi3_32.dll</code>,etc</li> 
+										To do so, you need to login (this is only for the first time) and type 'WAPI' in Bloomberg terminal, as shown in the following pictures:
+										
+										<span class="image fit"><img src="images/Bloomberg1.png" alt="" /></span>
+										<p>Next, download the file. I am using Windows, so I download the file which is compatible with windows.</p>
+										<span class="image fit"><img src="images/Bloomberg2.png" alt="" /></span>
+										
+										Once you downloaded the file, you need to copy <code>blpapi3_32.dll</code> and <code>blpapi3_64.dll</code> under bin folder to Bloomberg BLPAPI_ROOT folder, normally blp/DAPI.
+										
+										<li><b>Step 4</b>: Upload them in your Jupyter</li> 
+										<span class="image fit"><img src="images/Bloomberg3.png" alt="" /></span>
+										Done!
+										</p>
+										
+		
+										<h3>2.2. Data Collection from Bloomberg by using xbbg</h3>
+										
+										<li><b>Step 1</b>: Find the field</li> 
+										Let's say I want to find the revenue of Ford motors Co. from 2019-01-01 till 2020-12-30. So, I first type "revenue" in bloomberg terminal for finding the field asscoaied with the revenue. see the following picture
+										<span class="image fit"><img src="images/Bloomberg4.png" alt="" /></span>
+				
+										<li><b> Collecting Historical data</b>:</li> 
+										After finding the field, I use the syntax of <code>blp.bdh('tickers', field,override,start_date='YYYY-MM-DD', end_date='YYYY-MM-DD') </code>. <br>
+										'tickers': This is where you put tickers. Notice that tickers format in WRDS are differnt than Bloomberg. For example, the ticker of  Ford motors Co. in Bloomberg is 'F US Equity' but it 'F' in WRDS. <br>
+										See the following figure which shows revenue of Ford motors Co. from 2019-01-01 till 2020-12-30<br>
+										<span class="image fit"><img src="images/Bloomberg5.png" alt="" /></span>
+										
+										<li><b>Collecting Non-historical Data</b>:</li> 
+										For non-historical data, we use <code>blp.bdp(tickers,fields)</code>
+										<span class="image fit"><img src="images/Bloomberg6.png" alt="" /></span>
+										
+										Likewise, we can send a list of tickers for collecting historical or non-historical data:
+										<span class="image fit"><img src="images/Bloomberg7.png" alt="" /></span>
+									<hr />
+						
+									
+				
+			
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
